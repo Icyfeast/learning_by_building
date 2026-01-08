@@ -1,6 +1,7 @@
 # vector_store.py
 import faiss
 import numpy as np
+from embedding import embed
 
 def build_index(vectors):
     dim = len(vectors[0])
@@ -17,4 +18,8 @@ def search(query, index, chunks):
     )
     return [chunks[i] for i in I[0]]
 
-
+def keyword_filter(chunks, keywords):
+    return [
+        c for c in chunks
+        if all(k.lower() in c.lower() for k in keywords)
+    ]
