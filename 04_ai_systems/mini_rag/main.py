@@ -4,8 +4,8 @@ import os
 from embedding import embed
 from vector_store import build_index, search,keyword_filter
 import nltk
-nltk.download('punkt')
-nltk.download('punkt_tab')
+# nltk.download('punkt')
+# nltk.download('punkt_tab')
 from nltk.tokenize import sent_tokenize
 
 
@@ -16,14 +16,15 @@ with open(file_path) as f:
 
 # chunks = sentence_chunk(text)
 chunks = sent_tokenize(text)
-keywords = ["FY2023", "net profit margin"]
+keywords = ["net profit margin"]
 filtered_chunks = keyword_filter(chunks, keywords)
 print("Number of filtered chunks:", len(filtered_chunks))
 print("Filtered chunks:", filtered_chunks)
 vectors = embed(filtered_chunks)
 index = build_index(vectors)
 
-query = "What is the net profit margin for FY2023?"
+query = "What is the net profit margin for FY2024?"
+
 retrieved = search(query, index, filtered_chunks)
 print("Query:", query)
 print("Retrieved context:\n", retrieved)
