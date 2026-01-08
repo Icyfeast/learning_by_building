@@ -3,13 +3,19 @@ import os
 # rag.py
 from embedding import embed
 from vector_store import build_index, search,keyword_filter
-from chunking import sentence_chunk
+import nltk
+nltk.download('punkt')
+nltk.download('punkt_tab')
+from nltk.tokenize import sent_tokenize
+
+
 
 file_path = os.path.join(os.path.dirname(__file__), "financial_reports.txt")
 with open(file_path) as f:
     text = f.read()
 
-chunks = sentence_chunk(text)
+# chunks = sentence_chunk(text)
+chunks = sent_tokenize(text)
 keywords = ["FY2023", "net profit margin"]
 filtered_chunks = keyword_filter(chunks, keywords)
 print("Number of filtered chunks:", len(filtered_chunks))
